@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "545641554460",
+    "project_id": "tfg-raulmontero",
+    "storage_bucket": "tfg-raulmontero.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545641554460:android:9b2c66a5c805b8a004f5d9",
+        "android_client_info": {
+          "package_name": "com.example.tfg_raulmontero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545641554460-k37cma92ov7nhvqj664meni9nq4bop7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIJTDe47mBgU3-iKtJNhSHcSt4tEaqzX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545641554460-k37cma92ov7nhvqj664meni9nq4bop7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
