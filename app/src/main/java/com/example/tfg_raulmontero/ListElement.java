@@ -1,6 +1,8 @@
 package com.example.tfg_raulmontero;
 
-public class ListElement {
+import java.io.Serializable;
+
+public class ListElement implements Serializable {
     public String color;
     public String name;
     public String description;

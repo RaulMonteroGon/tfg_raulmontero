@@ -130,11 +130,24 @@ class MainActivity : AppCompatActivity() {
         elementslst.add(ListElement("#775447", "Grupo6", "Resi Oslo", "1", "123"))
         elementslst.add(ListElement("#775447", "Grupo7", "Resi Oslo", "1", "123"))
 
-        var listadapter = ListAdapter(elementslst,this)
+
+
+        class Listener : ListAdapter.OnItemClickListener{
+            override fun onItemClick(item: ListElement?) {
+                if (item != null) {
+                    moveToDescription(item)
+                }
+            }
+        }
+
+        var listadapter = ListAdapter(elementslst,this,Listener())
         recyclerview = findViewById(R.id.groupsRecyclerView)
         recyclerview.setHasFixedSize(true)
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.adapter = listadapter
 
+    }
+    fun moveToDescription (item: ListElement){
+        Toast.makeText(this, "Hola", Toast.LENGTH_LONG).show()
     }
 }
