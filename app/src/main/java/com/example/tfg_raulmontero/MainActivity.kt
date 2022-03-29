@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -25,12 +27,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnjoingrp: Button
     lateinit var joinedtxt: EditText
     lateinit var createedtxtcreate: EditText
-
-
+    lateinit var recyclerview :RecyclerView
     lateinit var db :FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var googleSignInOptions: GoogleSignInOptions
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,31 +49,10 @@ class MainActivity : AppCompatActivity() {
         db = Firebase.firestore
         auth = FirebaseAuth.getInstance()
 
+
+        initcards();
+
         btnlogoff.setOnClickListener{
-            /*Firebase.auth.signOut()
-            val logout = Intent(this,LoginActivity::class.java)
-            startActivity(logout)*/
-
-            /*val group = hashMapOf("group1" to "prueba")
-            db.collection("groups").add(group)
-                .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
-
-            db.collection("groups").get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        Log.d(TAG, "${document.id} => ${document.data}")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w(TAG, "Error getting documents: ", exception)
-                }*/
-
-
 
             FirebaseAuth.getInstance().signOut();
             googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -126,6 +107,34 @@ class MainActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
             }
+
+    }
+    fun creartarea(documentid : String, nombretarea : String, asignaciontarea : List<String>,configuraciontarea : String ){
+        class tareas (
+            val asignacion : List<String>? = asignaciontarea,
+            val configuracion: String? = configuraciontarea,
+        )
+        val data = tareas()
+        db.collection("groups").document(documentid).collection("tareas").document(nombretarea)
+            .set(data)
+    }
+
+    fun initcards(){
+        //var elementslst:List<ListElement> =
+        var elementslst = mutableListOf<ListElement>(ListElement("#775447", "Grupo1", "Resi Oslo", "1", "123"))
+        elementslst.add(ListElement("#775447", "Grupo1", "Resi Oslo", "1", "123"))
+        elementslst.add(ListElement("#775447", "Grupo2", "Resi Oslo", "1", "123"))
+        elementslst.add(ListElement("#775447", "Grupo3", "Resi Oslo", "1", "123"))
+        elementslst.add(ListElement("#775447", "Grupo4", "Resi Oslo", "1", "123"))
+        elementslst.add(ListElement("#775447", "Grupo5", "Resi Oslo", "1", "123"))
+        elementslst.add(ListElement("#775447", "Grupo6", "Resi Oslo", "1", "123"))
+        elementslst.add(ListElement("#775447", "Grupo7", "Resi Oslo", "1", "123"))
+
+        var listadapter = ListAdapter(elementslst,this)
+        recyclerview = findViewById(R.id.groupsRecyclerView)
+        recyclerview.setHasFixedSize(true)
+        recyclerview.layoutManager = LinearLayoutManager(this)
+        recyclerview.adapter = listadapter
 
     }
 }
