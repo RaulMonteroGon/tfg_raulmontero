@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnlogoff : Button
     lateinit var btncreategrp: Button
     lateinit var btnjoingrp: Button
+    lateinit var joinedtxt: EditText
+    lateinit var createedtxtcreate: EditText
+
+
     lateinit var db :FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -35,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         btnlogoff = findViewById(R.id.btnLogout)
         btncreategrp = findViewById(R.id.Creategrpbtn)
         btnjoingrp = findViewById(R.id.Joingrpbtn)
+
+        createedtxtcreate = findViewById(R.id.Createrptxt)
+        joinedtxt = findViewById(R.id.Joingrptxt)
 
         db = Firebase.firestore
         auth = FirebaseAuth.getInstance()
@@ -79,10 +87,13 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
         btnjoingrp.setOnClickListener{
-            joingroup("pPzid2LqMC6ESIUJ5c9m")
+            var joingrptxt = joinedtxt.text.toString()
+            //joingroup("pPzid2LqMC6ESIUJ5c9m")
+            joingroup(joingrptxt)
         }
         btncreategrp.setOnClickListener {
-            creategroup("prueba1")
+            var creategrptxt = createedtxtcreate.text.toString()
+            creategroup(creategrptxt)
         }
     }
 
@@ -94,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         class grupo(
             val nombre: String = name,
             val compra: List<String>? = null,
-            val participantes: List<String> = listOf("rmontegon@gmail.com")
+            val participantes: List<String> = listOf(auth.currentUser?.email.toString())
         )
         val data = grupo()
 
