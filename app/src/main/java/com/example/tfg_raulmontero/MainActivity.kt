@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
 
         initcards();
+        Thread.sleep(1_000)
 
         btnlogoff.setOnClickListener{
 
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             var creategrptxt = createedtxtcreate.text.toString()
             creategroup(creategrptxt)
         }
+        Toast.makeText(this, "Prueba2", Toast.LENGTH_LONG).show()
     }
 
     fun joingroup (iddoc : String){
@@ -120,17 +122,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initcards(){
-        //var elementslst:List<ListElement> =
-        var elementslst = mutableListOf<ListElement>(ListElement("#775447", "Grupo1", "Resi Oslo", "1", "123"))
-        elementslst.add(ListElement("#775447", "Grupo1", "Resi Oslo", "1", "123"))
-        elementslst.add(ListElement("#775447", "Grupo2", "Resi Oslo", "1", "123"))
-        elementslst.add(ListElement("#775447", "Grupo3", "Resi Oslo", "1", "123"))
-        elementslst.add(ListElement("#775447", "Grupo4", "Resi Oslo", "1", "123"))
-        elementslst.add(ListElement("#775447", "Grupo5", "Resi Oslo", "1", "123"))
-        elementslst.add(ListElement("#775447", "Grupo6", "Resi Oslo", "1", "123"))
-        elementslst.add(ListElement("#775447", "Grupo7", "Resi Oslo", "1", "123"))
 
+        var elementslst = mutableListOf<ListElement>()
+        //ListElement("#775447", "Grupo1", "Resi Oslo", "1", "123")
 
+        db.collection("groups").whereArrayContains("participantes", auth.currentUser?.email.toString())
+
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    elementslst.add(ListElement("#775447", document.get("nombre") as String?,document.get("nombre") as String?,"1",document.id))
+
+                    Toast.makeText(this, "Prueba", Toast.LENGTH_LONG).show()
+                        Log.d(TAG, "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+            }
 
         class Listener : ListAdapter.OnItemClickListener{
             override fun onItemClick(item: ListElement?) {
