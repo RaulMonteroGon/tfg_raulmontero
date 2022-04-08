@@ -51,22 +51,10 @@ class MainActivity : AppCompatActivity() {
 
 
         initcards();
-        Thread.sleep(1_000)
+        Thread.sleep(2_000)
 
         btnlogoff.setOnClickListener{
-
-            FirebaseAuth.getInstance().signOut();
-            googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("545641554460-k37cma92ov7nhvqj664meni9nq4bop7a.apps.googleusercontent.com")
-                .requestEmail()
-                .build()
-            mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-            mGoogleSignInClient.signOut()
-            val logout = Intent (this, LoginActivity::class.java)
-            logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-            startActivity(logout)
-            finish()
+            logout()
         }
         btnjoingrp.setOnClickListener{
             var joingrptxt = joinedtxt.text.toString()
@@ -77,8 +65,26 @@ class MainActivity : AppCompatActivity() {
             var creategrptxt = createedtxtcreate.text.toString()
             creategroup(creategrptxt)
         }
-        Toast.makeText(this, "Prueba2", Toast.LENGTH_LONG).show()
+
     }
+
+
+
+    fun logout(){
+        FirebaseAuth.getInstance().signOut();
+        googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("545641554460-k37cma92ov7nhvqj664meni9nq4bop7a.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+        mGoogleSignInClient.signOut()
+        val logout = Intent (this, LoginActivity::class.java)
+        logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        startActivity(logout)
+        finish()
+    }
+
 
     fun joingroup (iddoc : String){
         val document = db.collection("groups").document(iddoc)
@@ -133,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                 for (document in documents) {
                     elementslst.add(ListElement("#775447", document.get("nombre") as String?,document.get("nombre") as String?,"1",document.id))
 
-                    Toast.makeText(this, "Prueba", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this, "Prueba", Toast.LENGTH_LONG).show()
                         Log.d(TAG, "${document.id} => ${document.data}")
                 }
             }
@@ -157,6 +163,10 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun moveToDescription (item: ListElement){
-        Toast.makeText(this, "Hola", Toast.LENGTH_LONG).show()
+        val gotogroupIntent = Intent(this,GroupActivity::class.java)
+        gotogroupIntent.putExtra("GroupElement", item)
+        startActivity(gotogroupIntent)
+
+        //Toast.makeText(this, "Hola", Toast.LENGTH_LONG).show()
     }
 }

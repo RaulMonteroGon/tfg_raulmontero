@@ -11,7 +11,6 @@
         android:layout_width="178dp"
         android:layout_height="48dp"
         android:layout_marginStart="34dp"
-        android:layout_marginTop="48dp"
         android:layout_marginEnd="19dp"
         android:layout_marginBottom="414dp"
         android:ems="10"
@@ -19,6 +18,7 @@
         android:text="Invitation code"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Joingrpbtn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Createrptxt" />
 
@@ -42,7 +42,9 @@
         android:layout_marginStart="231dp"
         android:layout_marginTop="90dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="28dp"
         android:text="Create group"
+        app:layout_constraintBottom_toTopOf="@+id/Joingrpbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
@@ -52,7 +54,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="231dp"
-        android:layout_marginTop="45dp"
         android:layout_marginEnd="54dp"
         android:layout_marginBottom="415dp"
         android:text="Join group"
@@ -68,25 +69,29 @@
         android:layout_marginStart="34dp"
         android:layout_marginTop="93dp"
         android:layout_marginEnd="19dp"
+        android:layout_marginBottom="29dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:text="Group Name"
+        app:layout_constraintBottom_toTopOf="@+id/Joingrptxt"
         app:layout_constraintEnd_toStartOf="@+id/Creategrpbtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groupsRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="337dp"
+        android:layout_height="358dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Joingrptxt" />
+        app:layout_constraintTop_toBottomOf="@+id/Joingrptxt"
+        app:layout_constraintVertical_bias="0.651" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
