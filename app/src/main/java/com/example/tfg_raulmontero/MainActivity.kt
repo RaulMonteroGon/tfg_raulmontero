@@ -117,15 +117,7 @@ class MainActivity : AppCompatActivity() {
             }
 
     }
-    fun creartarea(documentid : String, nombretarea : String, asignaciontarea : List<String>,configuraciontarea : String ){
-        class tareas (
-            val asignacion : List<String>? = asignaciontarea,
-            val configuracion: String? = configuraciontarea,
-        )
-        val data = tareas()
-        db.collection("groups").document(documentid).collection("tareas").document(nombretarea)
-            .set(data)
-    }
+
 
     fun initcards(){
 

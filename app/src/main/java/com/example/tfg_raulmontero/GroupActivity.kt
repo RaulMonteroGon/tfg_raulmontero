@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ class GroupActivity : AppCompatActivity() {
     lateinit var groupTitleTextView : TextView
     lateinit var element :ListElement
     lateinit var taskrecyclerview : RecyclerView
+    lateinit var btnCreateTask: Button
 
     lateinit var db : FirebaseFirestore
     private lateinit var auth: FirebaseAuth
@@ -27,21 +29,22 @@ class GroupActivity : AppCompatActivity() {
         db = Firebase.firestore
         auth = FirebaseAuth.getInstance()
 
+        groupTitleTextView = findViewById(R.id.groupTitleTextView)
+        btnCreateTask = findViewById(R.id.createTaskButton)
+
         element = intent.getSerializableExtra("GroupElement") as ListElement
 
         initcards();
         Thread.sleep(2_000)
-        groupTitleTextView = findViewById(R.id.groupTitleTextView)
 
 
         groupTitleTextView.text = element.getName()
 
-    }
-
-    fun getTareas(){
-
-        val tareas = db.collection("groups").document(element.getIdgroup()).collection("tareas").get()
-
+        btnCreateTask.setOnClickListener{
+            val createTaskIntent = Intent(this,CreateTaskActivity::class.java)
+            createTaskIntent.putExtra("GroupElement", element)
+            startActivity(createTaskIntent)
+        }
     }
 
 
