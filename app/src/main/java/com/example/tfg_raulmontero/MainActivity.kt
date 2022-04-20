@@ -103,14 +103,14 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
 
-                class economia()
+                class economia()/*
                 class tareas (
                     val asignacion : List<String>? = null,
                     val configuracion: String? = null,
                         )
                 val data = tareas()
                 db.collection("groups").document(documentReference.id).collection("tareas")
-                    .add(data)
+                    .add(data)*/
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
