@@ -16,4 +16,9 @@
         android:textColor="@color/black"
         android:textSize="40sp"
         android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/processTaskRG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

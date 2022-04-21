@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.sql.Timestamp
+import java.text.SimpleDateFormat
 
 class CreateTaskActivity : AppCompatActivity() {
 
@@ -19,14 +20,16 @@ class CreateTaskActivity : AppCompatActivity() {
     lateinit var nameTask : EditText
     lateinit var descriptionTask : EditText
     lateinit var settingsTask : EditText
-    lateinit var asignationTask : EditText
+    lateinit var asignationTask : MultiAutoCompleteTextView
     lateinit var dateTask : TextView
     lateinit var selectDay :Button
     lateinit var horaTask : EditText
     lateinit var hourSwitch : Switch
     lateinit var submitnewtaskButton :Button
 
+    lateinit var asignacion : List<String>
 
+    lateinit var group :ListElement
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_task)
@@ -47,6 +50,33 @@ class CreateTaskActivity : AppCompatActivity() {
 
         selectDay.setOnClickListener { showDatePickerDialog() }
 
+        group = intent.getSerializableExtra("GroupElement") as ListElement
+
+
+        setupasignacion()
+
+        submitnewtaskButton.setOnClickListener{
+            val asignacionarray = asignationTask.text.toString().split(",")
+            creartarea(group.idgroup,
+                nameTask.text.toString(),
+                asignacionarray,
+                settingsTask.text.toString(),
+                descriptionTask.text.toString(),
+                SimpleDateFormat("dd/MM/yyyy").parse(selectDay.text.toString()) as Timestamp
+                )
+        }
+    }
+
+    private fun setupasignacion(){
+        db.collection("groups").document(group.idgroup).get()
+            .addOnSuccessListener { documentSnapshot ->
+                asignacion = documentSnapshot["asignacion"] as List<String>
+            }
+
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, asignacion)
+        asignationTask.setAdapter(adapter)
+        asignationTask.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
 
     }
 
@@ -59,13 +89,17 @@ class CreateTaskActivity : AppCompatActivity() {
         dateTask.setText("$day/$month/$year")
     }
 
-
-    fun creartarea(documentid : String,
+    private fun siguientetarea(): List<String> {
+        return listOf("hola")
+        //Seleccionar tamaño de grupo ->
+        //seleccionar modo aleatorio/por orden
+        //-> Seleccionar persona de inicio/aleatorio
+    }
+    private fun creartarea(documentid : String,
                    nombretarea : String,
                    asignaciontarea : List<String>,
                    configuraciontarea : String,
                    descripciontarea : String,
-                   asignacionsiguientetarea : List<String>,
                    proximarealizaciontarea:Timestamp){
 
         class tareas (
@@ -73,7 +107,7 @@ class CreateTaskActivity : AppCompatActivity() {
             val configuracion: String? = configuraciontarea,
             val descripcion: String?= descripciontarea,
             val estado : String = "Sin hacer",
-            val asignacionsiguiente : List<String>? = asignacionsiguientetarea,
+            val asignacionsiguiente : List<String>? = siguientetarea(),
             val nombre : String = nombretarea,
             val ultimarealizacion : Timestamp? = null,
             val proximarealizacion: Timestamp = proximarealizaciontarea)
