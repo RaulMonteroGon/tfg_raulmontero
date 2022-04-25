@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnlogoff : Button
     lateinit var btncreategrp: Button
     lateinit var btnjoingrp: Button
+    lateinit var btnmytask: Button
     lateinit var joinedtxt: EditText
     lateinit var createedtxtcreate: EditText
     lateinit var recyclerview :RecyclerView
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         btnlogoff = findViewById(R.id.btnLogout)
         btncreategrp = findViewById(R.id.Creategrpbtn)
         btnjoingrp = findViewById(R.id.Joingrpbtn)
+        btnmytask = findViewById(R.id.mytaskbtn)
 
         createedtxtcreate = findViewById(R.id.Createrptxt)
         joinedtxt = findViewById(R.id.Joingrptxt)
@@ -65,6 +67,11 @@ class MainActivity : AppCompatActivity() {
             var creategrptxt = createedtxtcreate.text.toString()
             creategroup(creategrptxt)
         }
+        btnmytask.setOnClickListener {
+            val mytaskIntent = Intent(this,MyTaskActivity::class.java)
+            startActivity(mytaskIntent)
+        }
+
 
     }
 

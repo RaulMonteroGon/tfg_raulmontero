@@ -27,7 +27,6 @@ class CreateTaskActivity : AppCompatActivity() {
     lateinit var hourSwitch : Switch
     lateinit var submitnewtaskButton :Button
 
-    lateinit var asignacion : List<String>
 
     lateinit var group :ListElement
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +53,8 @@ class CreateTaskActivity : AppCompatActivity() {
 
 
         setupasignacion()
+        Thread.sleep(1_000)
+
 
         submitnewtaskButton.setOnClickListener{
             val asignacionarray = asignationTask.text.toString().split(",")
@@ -62,22 +63,20 @@ class CreateTaskActivity : AppCompatActivity() {
                 asignacionarray,
                 settingsTask.text.toString(),
                 descriptionTask.text.toString(),
-                SimpleDateFormat("dd/MM/yyyy").parse(selectDay.text.toString()) as Timestamp
+                dateTask.text.toString(),
+                horaTask.text.toString()
                 )
         }
     }
 
     private fun setupasignacion(){
         db.collection("groups").document(group.idgroup).get()
-            .addOnSuccessListener { documentSnapshot ->
-                asignacion = documentSnapshot["asignacion"] as List<String>
+            .addOnSuccessListener {
+
+                val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, it.get("participantes")as List<String>)
+                asignationTask.setAdapter(adapter)
+                asignationTask.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
             }
-
-
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, asignacion)
-        asignationTask.setAdapter(adapter)
-        asignationTask.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
-
     }
 
     private fun showDatePickerDialog() {
@@ -89,28 +88,25 @@ class CreateTaskActivity : AppCompatActivity() {
         dateTask.setText("$day/$month/$year")
     }
 
-    private fun siguientetarea(): List<String> {
-        return listOf("hola")
-        //Seleccionar tamaño de grupo ->
-        //seleccionar modo aleatorio/por orden
-        //-> Seleccionar persona de inicio/aleatorio
-    }
+
     private fun creartarea(documentid : String,
                    nombretarea : String,
                    asignaciontarea : List<String>,
                    configuraciontarea : String,
                    descripciontarea : String,
-                   proximarealizaciontarea:Timestamp){
+                   diatarea: String,
+                   horatarea:String?
+                   ){
 
         class tareas (
             val asignacion : List<String>? = asignaciontarea,
             val configuracion: String? = configuraciontarea,
             val descripcion: String?= descripciontarea,
             val estado : String = "Sin hacer",
-            val asignacionsiguiente : List<String>? = siguientetarea(),
             val nombre : String = nombretarea,
-            val ultimarealizacion : Timestamp? = null,
-            val proximarealizacion: Timestamp = proximarealizaciontarea)
+            val dia : String= diatarea,
+            val hora : String? = horatarea
+        )
 
 
         val data = tareas()
