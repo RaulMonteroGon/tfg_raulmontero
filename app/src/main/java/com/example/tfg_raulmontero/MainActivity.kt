@@ -1,5 +1,6 @@
 package com.example.tfg_raulmontero
 
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,19 +8,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.lang.reflect.Field
 
 class MainActivity : AppCompatActivity() {
     lateinit var btnlogoff : Button
@@ -28,7 +26,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnmytask: Button
     lateinit var joinedtxt: EditText
     lateinit var createedtxtcreate: EditText
+
     lateinit var recyclerview :RecyclerView
+    lateinit var mytaskrecyclerview: RecyclerView
+
     lateinit var db :FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -52,7 +53,8 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
 
-        initcards();
+        initgroups()
+        inittasks()
         Thread.sleep(2_000)
 
         btnlogoff.setOnClickListener{
@@ -126,7 +128,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun initcards(){
+    fun initgroups(){
 
         var elementslst = mutableListOf<ListElement>()
         //ListElement("#775447", "Grupo1", "Resi Oslo", "1", "123")
@@ -149,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         class Listener : ListAdapter.OnItemClickListener{
             override fun onItemClick(item: ListElement?) {
                 if (item != null) {
-                    moveToDescription(item)
+                    moveToDescriptionGroups(item)
                 }
             }
         }
@@ -161,11 +163,64 @@ class MainActivity : AppCompatActivity() {
         recyclerview.adapter = listadapter
 
     }
-    fun moveToDescription (item: ListElement){
+    fun moveToDescriptionGroups (item: ListElement){
         val gotogroupIntent = Intent(this,GroupActivity::class.java)
         gotogroupIntent.putExtra("GroupElement", item)
         startActivity(gotogroupIntent)
 
         //Toast.makeText(this, "Hola", Toast.LENGTH_LONG).show()
+    }
+    fun inittasks() {
+
+        var elementslst = mutableListOf<ListElement>()
+
+
+        db.collectionGroup("tareas").whereArrayContains("asignacion",auth.currentUser?.email.toString())
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    //Toast.makeText(this, "soy rapido", Toast.LENGTH_SHORT).show()
+
+                    //elementslst.add(ListElement("#775447", "Grupo3", "Resi Oslo", "1", "123"))
+
+                    elementslst.add(
+                        ListElement(
+                            "#775447",
+                            document.get("nombre") as String?,
+                            "123",
+                            "1",
+                            document.id
+                        )
+                    )
+                }
+            }
+            .addOnFailureListener { exception ->
+                elementslst.add(ListElement("#775447", "Grupoerror", "Resi Oslo", "1", "123"))
+                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+            }
+
+
+        class Listener : ListAdapter.OnItemClickListener{
+            override fun onItemClick(item: ListElement?) {
+                if (item != null) {
+                    moveToDescription(item)
+                }
+            }
+        }
+
+
+        var listadaptertask = ListAdapter(elementslst,this,Listener())
+        mytaskrecyclerview = findViewById(R.id.mytaskRecyclerView)
+        mytaskrecyclerview.setHasFixedSize(true)
+        mytaskrecyclerview.layoutManager = LinearLayoutManager(this)
+        mytaskrecyclerview.adapter = listadaptertask
+
+    }
+    fun moveToDescription (item: ListElement){
+        val gototaskIntent = Intent(this,TaskActivity::class.java)
+        gototaskIntent.putExtra("TaskElement", item)
+        startActivity(gototaskIntent)
+
+
     }
 }

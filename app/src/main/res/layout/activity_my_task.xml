@@ -16,13 +16,13 @@
         android:textColor="@color/black"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/mytaskRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/mytaskRecyclerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/mytaskRecyclerView"
+        android:id="@+id/mytaskRecyclerView2"
         android:layout_width="370dp"
         android:layout_height="326dp"
         android:layout_marginStart="16dp"
