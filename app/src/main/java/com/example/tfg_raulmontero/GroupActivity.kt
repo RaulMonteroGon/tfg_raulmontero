@@ -86,6 +86,7 @@ class GroupActivity : AppCompatActivity() {
     fun moveToDescription (item: ListElement){
         val gototaskIntent = Intent(this,TaskActivity::class.java)
         gototaskIntent.putExtra("TaskElement", item)
+        gototaskIntent.putExtra("idgroup", element.getIdgroup())
         startActivity(gototaskIntent)
 
 

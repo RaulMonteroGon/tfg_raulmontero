@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnlogoff : Button
     lateinit var btncreategrp: Button
     lateinit var btnjoingrp: Button
-    lateinit var btnmytask: Button
+
     lateinit var joinedtxt: EditText
     lateinit var createedtxtcreate: EditText
 
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var googleSignInOptions: GoogleSignInOptions
 
+    lateinit var prueba :DocumentReference
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         btnlogoff = findViewById(R.id.btnLogout)
         btncreategrp = findViewById(R.id.Creategrpbtn)
         btnjoingrp = findViewById(R.id.Joingrpbtn)
-        btnmytask = findViewById(R.id.mytaskbtn)
+
 
         createedtxtcreate = findViewById(R.id.Createrptxt)
         joinedtxt = findViewById(R.id.Joingrptxt)
@@ -68,10 +71,6 @@ class MainActivity : AppCompatActivity() {
         btncreategrp.setOnClickListener {
             var creategrptxt = createedtxtcreate.text.toString()
             creategroup(creategrptxt)
-        }
-        btnmytask.setOnClickListener {
-            val mytaskIntent = Intent(this,MyTaskActivity::class.java)
-            startActivity(mytaskIntent)
         }
 
 
@@ -182,6 +181,7 @@ class MainActivity : AppCompatActivity() {
                     //Toast.makeText(this, "soy rapido", Toast.LENGTH_SHORT).show()
 
                     //elementslst.add(ListElement("#775447", "Grupo3", "Resi Oslo", "1", "123"))
+                    prueba = document.reference
 
                     elementslst.add(
                         ListElement(
@@ -219,6 +219,7 @@ class MainActivity : AppCompatActivity() {
     fun moveToDescription (item: ListElement){
         val gototaskIntent = Intent(this,TaskActivity::class.java)
         gototaskIntent.putExtra("TaskElement", item)
+        gototaskIntent.putExtra("idgroup", prueba.parent.parent?.id)
         startActivity(gototaskIntent)
 
 
