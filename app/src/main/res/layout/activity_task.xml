@@ -45,28 +45,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:singleSelection="true">
 
-        <Button
-            android:id="@+id/inprocessBtn"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/notdoneBtn"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="109dp"
             android:layout_height="48dp"
-            android:text="ToggleButton"
-            app:layout_constraintStart_toEndOf="@+id/notdoneBtn"
+            android:text="Not done"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintStart_toEndOf="@+id/doneBtn"
             app:layout_constraintTop_toBottomOf="@+id/taskTitleTextView" />
 
-        <Button
-            android:id="@+id/doneBtn"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inprogressBtn"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="109dp"
             android:layout_height="48dp"
-            android:text="ToggleButton"
-            app:layout_constraintStart_toEndOf="@+id/inprocessBtn"
+            android:text="In progress"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintStart_toEndOf="@+id/notdoneBtn"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/notdoneBtn"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/doneBtn"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="109dp"
             android:layout_height="48dp"
             android:layout_marginStart="29dp"
-            android:text="ToggleButton"
+            android:text="Done"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/stateTV" />
     </com.google.android.material.button.MaterialButtonToggleGroup>

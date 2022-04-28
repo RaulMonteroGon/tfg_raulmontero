@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var googleSignInOptions: GoogleSignInOptions
 
-    lateinit var prueba :DocumentReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -181,13 +180,13 @@ class MainActivity : AppCompatActivity() {
                     //Toast.makeText(this, "soy rapido", Toast.LENGTH_SHORT).show()
 
                     //elementslst.add(ListElement("#775447", "Grupo3", "Resi Oslo", "1", "123"))
-                    prueba = document.reference
+
 
                     elementslst.add(
                         ListElement(
                             "#775447",
                             document.get("nombre") as String?,
-                            "123",
+                            document.reference.parent.parent?.id,
                             "1",
                             document.id
                         )
@@ -219,7 +218,7 @@ class MainActivity : AppCompatActivity() {
     fun moveToDescription (item: ListElement){
         val gototaskIntent = Intent(this,TaskActivity::class.java)
         gototaskIntent.putExtra("TaskElement", item)
-        gototaskIntent.putExtra("idgroup", prueba.parent.parent?.id)
+        gototaskIntent.putExtra("idgroup", item.description)
         startActivity(gototaskIntent)
 
 

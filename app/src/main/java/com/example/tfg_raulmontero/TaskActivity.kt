@@ -1,6 +1,5 @@
 package com.example.tfg_raulmontero
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +7,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,12 +21,13 @@ class TaskActivity : AppCompatActivity() {
     lateinit var task :ListElement
     lateinit var toggleGroup: MaterialButtonToggleGroup
 
-    lateinit var inprocessBtn : Button
-    lateinit var doneBtn :Button
-    lateinit var notdoneBtn:Button
+    lateinit var inprocessBtn : MaterialButton
+    lateinit var doneBtn :MaterialButton
+    lateinit var notdoneBtn:MaterialButton
 
     lateinit var db : FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    lateinit var idgroup :String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,19 +38,19 @@ class TaskActivity : AppCompatActivity() {
 
         toggleGroup = findViewById(R.id.toggleButtonGroup)
         taskTitleTextView = findViewById(R.id.taskTitleTextView)
-        inprocessBtn = findViewById(R.id.inprocessBtn)
+        inprocessBtn = findViewById(R.id.inprogressBtn)
         doneBtn = findViewById(R.id.doneBtn)
         notdoneBtn = findViewById(R.id.notdoneBtn)
 
         task = intent.getSerializableExtra("TaskElement") as ListElement
-        val idgroup = intent.getSerializableExtra("idgroup") as String
-
-
+        idgroup = intent.getSerializableExtra("idgroup") as String
+        Toast.makeText(this, task.name, Toast.LENGTH_SHORT).show()
+        setupcheck()
         taskTitleTextView.text = task.getName()
         toggleGroup.addOnButtonCheckedListener { toggleGroup, checkedId, isChecked ->
             if(isChecked){
                 when (checkedId){
-                    R.id.inprocessBtn -> setinprocess()
+                    R.id.inprogressBtn -> setinprocess()
                     R.id.doneBtn -> setdone()
                     R.id.notdoneBtn -> setnotdone()
                 }
@@ -61,17 +63,30 @@ class TaskActivity : AppCompatActivity() {
     }
 
     fun setdone(){
-
+        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("estado","Finalizado")
+        Toast.makeText(this, "Has marcado la tarea como finalizada", Toast.LENGTH_SHORT).show()
     }
     fun setinprocess(){
-
+        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("estado","En proceso")
+        Toast.makeText(this, "Has marcado la tarea como en proceso", Toast.LENGTH_SHORT).show()
     }
     fun setnotdone(){
-
+        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("estado","Sin hacer")
+        Toast.makeText(this, "Has marcado la tarea como pendiente", Toast.LENGTH_SHORT).show()
     }
     fun setupcheck(){
+        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
+            .get()
+            .addOnSuccessListener {
+                val estado = it["estado"] as String?
+                when (estado){
+                    "Sin hacer" -> toggleGroup.check(R.id.notdoneBtn)
+                    "En proceso" -> toggleGroup.check(R.id.inprogressBtn)
+                    "Finalizado" -> toggleGroup.check(R.id.doneBtn)
+                }
+            }
 
-        toggleGroup.check(R.id.inprocessBtn)
+        //toggleGroup.check(R.id.inprocessBtn)
     }
     fun editarTarea(groupid : String,
                     taskid: String,
