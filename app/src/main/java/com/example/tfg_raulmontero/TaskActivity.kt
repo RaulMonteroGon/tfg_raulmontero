@@ -1,6 +1,7 @@
 package com.example.tfg_raulmontero
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,8 @@ class TaskActivity : AppCompatActivity() {
     lateinit var doneBtn :MaterialButton
     lateinit var notdoneBtn:MaterialButton
 
+    lateinit var deleteTaskBtn :Button
+
     lateinit var db : FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     lateinit var idgroup :String
@@ -41,6 +44,8 @@ class TaskActivity : AppCompatActivity() {
         inprocessBtn = findViewById(R.id.inprogressBtn)
         doneBtn = findViewById(R.id.doneBtn)
         notdoneBtn = findViewById(R.id.notdoneBtn)
+        deleteTaskBtn = findViewById(R.id.deleteTaskBtn)
+
 
         task = intent.getSerializableExtra("TaskElement") as ListElement
         idgroup = intent.getSerializableExtra("idgroup") as String
@@ -59,6 +64,15 @@ class TaskActivity : AppCompatActivity() {
                     setupcheck()
                 }
             }
+        }
+        deleteTaskBtn.setOnClickListener{
+            db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
+                .delete()
+                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+            val deletetaskIntent = Intent(this,GroupActivity::class.java)
+            startActivity(deletetaskIntent)
+            finish()
         }
     }
 
