@@ -48,13 +48,18 @@ class GroupActivity : AppCompatActivity() {
             startActivity(createTaskIntent)
         }
         btndeleteGroup.setOnClickListener{
-            db.collection("groups").document(element.getIdgroup())
+            val deletegroupIntent = Intent(this,GroupSettingsActivity::class.java)
+            startActivity(deletegroupIntent)
+
+
+
+            /*db.collection("groups").document(element.getIdgroup())
                 .delete()
                 .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
                 .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
             val deletegroupIntent = Intent(this,MainActivity::class.java)
             startActivity(deletegroupIntent)
-            finish()
+            finish()*/
         }
     }
 

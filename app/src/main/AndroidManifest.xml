@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tfg_raulmontero">
         <activity
+            android:name=".GroupSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyTaskActivity"
             android:exported="false" />
         <activity
