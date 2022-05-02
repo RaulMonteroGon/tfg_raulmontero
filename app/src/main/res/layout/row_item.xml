@@ -16,6 +16,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/rowCheckBox"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"/>
 
 </RelativeLayout>

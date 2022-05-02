@@ -3,8 +3,10 @@ package com.example.tfg_raulmontero
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,6 +19,7 @@ class GroupSettingsActivity : AppCompatActivity() {
 
     var dataModel :ArrayList<DataModel>? =null
     lateinit var listView: ListView
+    lateinit var submitBtn : Button
     lateinit var membersadapter: MembersAdapter
 
     lateinit var db : FirebaseFirestore
@@ -34,6 +37,8 @@ class GroupSettingsActivity : AppCompatActivity() {
         idgroup = intent.getSerializableExtra("idgroup") as String
 
         listView = findViewById<View>(R.id.membersListView) as ListView
+        submitBtn = findViewById(R.id.submitGroupBtn)
+
         dataModel = ArrayList<DataModel>()
 
         db.collection("groups").document(idgroup)
@@ -43,12 +48,22 @@ class GroupSettingsActivity : AppCompatActivity() {
                 for (members in memberslist.indices!!){
                     dataModel!!.add(DataModel(memberslist[members],false))
                 }
-                Toast.makeText(this, memberslist?.get(0) ?: String(), Toast.LENGTH_SHORT).show()
 
 
 
+
+                listView.setItemsCanFocus(false);
                 membersadapter = MembersAdapter(dataModel!!, applicationContext)
                 listView.adapter = membersadapter
+
+
+                listView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
+
+                    val dataModel1 : DataModel = dataModel!![position] as DataModel
+                    dataModel1.checked = !dataModel1.checked
+                    membersadapter.notifyDataSetChanged()
+                })
+
 
 
             }.addOnFailureListener { exception ->
@@ -64,13 +79,19 @@ class GroupSettingsActivity : AppCompatActivity() {
 
 
 
+        submitBtn.setOnClickListener {
+            var memberschecked = mutableListOf<String>()
+            //memberschecked!!.add(dataModel!![0].name.toString())
 
-
-        listView.onItemClickListener = OnItemClickListener{_,_,position,_ ->
-            val dataModel : DataModel = dataModel!![position] as DataModel
-            dataModel.checked = !dataModel.checked
-            membersadapter.notifyDataSetChanged()
+            for (i in 0 until dataModel!!.size){
+                if (dataModel!![i].checked == true){
+                    memberschecked!!.add(dataModel!![i].name.toString())
+                }
+            }
+            Toast.makeText(this, memberschecked[0], Toast.LENGTH_SHORT).show()
         }
+
+
 
     }
 }
