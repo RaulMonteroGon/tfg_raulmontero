@@ -39,11 +39,10 @@ class GroupSettingsActivity : AppCompatActivity() {
         db.collection("groups").document(idgroup)
             .get()
             .addOnSuccessListener {
-                val memberslist = it["participantes"] as ArrayList<String>?
-                /*for (members in memberslist!!){
-                    dataModel!!.add(DataModel(members,false))
-                }*/
-                dataModel!!.add(DataModel("hola",false))
+                val memberslist = it["participantes"] as List<String>
+                for (members in memberslist.indices!!){
+                    dataModel!!.add(DataModel(memberslist[members],false))
+                }
                 Toast.makeText(this, memberslist?.get(0) ?: String(), Toast.LENGTH_SHORT).show()
 
 
@@ -57,7 +56,7 @@ class GroupSettingsActivity : AppCompatActivity() {
             }
 
 
-        dataModel!!.add(DataModel("ApplePie",false))
+
         /*dataModel!!.add(DataModel("Manzana",false))
         dataModel!!.add(DataModel("Pera",false))
         dataModel!!.add(DataModel("Albaricoque",false))*/
