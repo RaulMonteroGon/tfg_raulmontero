@@ -72,10 +72,6 @@ class GroupSettingsActivity : AppCompatActivity() {
 
 
 
-        /*dataModel!!.add(DataModel("Manzana",false))
-        dataModel!!.add(DataModel("Pera",false))
-        dataModel!!.add(DataModel("Albaricoque",false))*/
-
 
 
 

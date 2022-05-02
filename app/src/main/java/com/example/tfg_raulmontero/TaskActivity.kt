@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +30,11 @@ class TaskActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     lateinit var idgroup :String
 
+    lateinit var listView: ListView
+
+    var dataModel :ArrayList<DataModel>? =null
+    lateinit var membersadapter: MembersAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
@@ -46,6 +49,7 @@ class TaskActivity : AppCompatActivity() {
         notdoneBtn = findViewById(R.id.notdoneBtn)
         deleteTaskBtn = findViewById(R.id.deleteTaskBtn)
 
+        listView = findViewById<View>(R.id.taskmembersGroup) as ListView
 
         task = intent.getSerializableExtra("TaskElement") as ListElement
         idgroup = intent.getSerializableExtra("idgroup") as String
@@ -74,6 +78,40 @@ class TaskActivity : AppCompatActivity() {
             startActivity(deletetaskIntent)
             finish()
         }
+
+        dataModel = ArrayList<DataModel>()
+
+        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
+            .get()
+            .addOnSuccessListener {
+                val memberslist = it["asignacion"] as List<String>
+                for (members in memberslist.indices!!){
+                    dataModel!!.add(DataModel(memberslist[members],false))
+                }
+
+
+
+
+                listView.setItemsCanFocus(false);
+                membersadapter = MembersAdapter(dataModel!!, applicationContext)
+                listView.adapter = membersadapter
+
+
+                listView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
+
+                    val dataModel1 : DataModel = dataModel!![position] as DataModel
+                    dataModel1.checked = !dataModel1.checked
+                    membersadapter.notifyDataSetChanged()
+                })
+
+
+
+            }.addOnFailureListener { exception ->
+                dataModel!!.add(DataModel("no funciona",false))
+            }
+
+
+
     }
 
     fun setdone(){
