@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         initgroups()
         inittasks()
-        Thread.sleep(2_000)
+        //Thread.sleep(2_000)
 
         btnlogoff.setOnClickListener{
             logout()
@@ -140,25 +140,28 @@ class MainActivity : AppCompatActivity() {
 
                     //Toast.makeText(this, "Prueba", Toast.LENGTH_LONG).show()
                         Log.d(TAG, "${document.id} => ${document.data}")
+
+                    class Listener : ListAdapter.OnItemClickListener{
+                        override fun onItemClick(item: ListElement?) {
+                            if (item != null) {
+                                moveToDescriptionGroups(item)
+                            }
+                        }
+                    }
+                    var listadapter = ListAdapter(elementslst,this,Listener())
+                    recyclerview = findViewById(R.id.groupsRecyclerView)
+                    recyclerview.setHasFixedSize(true)
+                    recyclerview.layoutManager = LinearLayoutManager(this)
+                    recyclerview.adapter = listadapter
                 }
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
             }
 
-        class Listener : ListAdapter.OnItemClickListener{
-            override fun onItemClick(item: ListElement?) {
-                if (item != null) {
-                    moveToDescriptionGroups(item)
-                }
-            }
-        }
 
-        var listadapter = ListAdapter(elementslst,this,Listener())
-        recyclerview = findViewById(R.id.groupsRecyclerView)
-        recyclerview.setHasFixedSize(true)
-        recyclerview.layoutManager = LinearLayoutManager(this)
-        recyclerview.adapter = listadapter
+
+
 
     }
     fun moveToDescriptionGroups (item: ListElement){
@@ -192,6 +195,20 @@ class MainActivity : AppCompatActivity() {
                         )
                     )
                 }
+                class Listener : ListAdapter.OnItemClickListener{
+                    override fun onItemClick(item: ListElement?) {
+                        if (item != null) {
+                            moveToDescription(item)
+                        }
+                    }
+                }
+
+
+                var listadaptertask = ListAdapter(elementslst,this,Listener())
+                mytaskrecyclerview = findViewById(R.id.mytaskRecyclerView)
+                mytaskrecyclerview.setHasFixedSize(true)
+                mytaskrecyclerview.layoutManager = LinearLayoutManager(this)
+                mytaskrecyclerview.adapter = listadaptertask
             }
             .addOnFailureListener { exception ->
                 elementslst.add(ListElement("#775447", "Grupoerror", "Resi Oslo", "1", "123"))
@@ -199,20 +216,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-        class Listener : ListAdapter.OnItemClickListener{
-            override fun onItemClick(item: ListElement?) {
-                if (item != null) {
-                    moveToDescription(item)
-                }
-            }
-        }
 
-
-        var listadaptertask = ListAdapter(elementslst,this,Listener())
-        mytaskrecyclerview = findViewById(R.id.mytaskRecyclerView)
-        mytaskrecyclerview.setHasFixedSize(true)
-        mytaskrecyclerview.layoutManager = LinearLayoutManager(this)
-        mytaskrecyclerview.adapter = listadaptertask
 
     }
     fun moveToDescription (item: ListElement){

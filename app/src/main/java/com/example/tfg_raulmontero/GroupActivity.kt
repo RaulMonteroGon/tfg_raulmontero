@@ -37,7 +37,7 @@ class GroupActivity : AppCompatActivity() {
         element = intent.getSerializableExtra("GroupElement") as ListElement
 
         initcards();
-        Thread.sleep(2_000)
+
 
 
         groupTitleTextView.text = element.getName()
@@ -49,6 +49,7 @@ class GroupActivity : AppCompatActivity() {
         }
         btndeleteGroup.setOnClickListener{
             val deletegroupIntent = Intent(this,GroupSettingsActivity::class.java)
+            deletegroupIntent.putExtra("idgroup", element.getIdgroup())
             startActivity(deletegroupIntent)
 
 
@@ -79,24 +80,25 @@ class GroupActivity : AppCompatActivity() {
                     //Toast.makeText(this, "Prueba", Toast.LENGTH_LONG).show()
                     Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
                 }
+                class Listener : ListAdapter.OnItemClickListener{
+                    override fun onItemClick(item: ListElement?) {
+                        if (item != null) {
+                            moveToDescription(item)
+                        }
+                    }
+                }
+
+                var listadapter = ListAdapter(elementslst,this,Listener())
+                taskrecyclerview = findViewById(R.id.taskRecyclerView)
+                taskrecyclerview.setHasFixedSize(true)
+                taskrecyclerview.layoutManager = LinearLayoutManager(this)
+                taskrecyclerview.adapter = listadapter
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
             }
 
-        class Listener : ListAdapter.OnItemClickListener{
-            override fun onItemClick(item: ListElement?) {
-                if (item != null) {
-                    moveToDescription(item)
-                }
-            }
-        }
 
-        var listadapter = ListAdapter(elementslst,this,Listener())
-        taskrecyclerview = findViewById(R.id.taskRecyclerView)
-        taskrecyclerview.setHasFixedSize(true)
-        taskrecyclerview.layoutManager = LinearLayoutManager(this)
-        taskrecyclerview.adapter = listadapter
 
     }
     fun moveToDescription (item: ListElement){
