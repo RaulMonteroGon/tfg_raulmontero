@@ -19,7 +19,7 @@ class GroupActivity : AppCompatActivity() {
     lateinit var element :ListElement
     lateinit var taskrecyclerview : RecyclerView
     lateinit var btnCreateTask: Button
-    lateinit var btndeleteGroup : Button
+    lateinit var btnsettingsGroup : Button
     lateinit var db : FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class GroupActivity : AppCompatActivity() {
 
         groupTitleTextView = findViewById(R.id.groupTitleTextView)
         btnCreateTask = findViewById(R.id.createTaskButton)
-        btndeleteGroup = findViewById(R.id.settingsBtn)
+        btnsettingsGroup = findViewById(R.id.settingsBtn)
 
         element = intent.getSerializableExtra("GroupElement") as ListElement
 
@@ -46,20 +46,14 @@ class GroupActivity : AppCompatActivity() {
             createTaskIntent.putExtra("GroupElement", element)
             startActivity(createTaskIntent)
         }
-        btndeleteGroup.setOnClickListener{
+        btnsettingsGroup.setOnClickListener{
             val deletegroupIntent = Intent(this,GroupSettingsActivity::class.java)
             deletegroupIntent.putExtra("idgroup", element.getIdgroup())
             startActivity(deletegroupIntent)
 
 
 
-            /*db.collection("groups").document(element.getIdgroup())
-                .delete()
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
-                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
-            val deletegroupIntent = Intent(this,MainActivity::class.java)
-            startActivity(deletegroupIntent)
-            finish()*/
+
         }
     }
 

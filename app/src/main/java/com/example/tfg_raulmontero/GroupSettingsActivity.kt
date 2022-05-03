@@ -1,7 +1,10 @@
 package com.example.tfg_raulmontero
 
+import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
@@ -21,7 +24,7 @@ class GroupSettingsActivity : AppCompatActivity() {
     lateinit var listView: ListView
     lateinit var submitBtn : Button
     lateinit var membersadapter: MembersAdapter
-
+    lateinit var btndeleteGroup : Button
     lateinit var db : FirebaseFirestore
     private lateinit var auth: FirebaseAuth
 
@@ -38,9 +41,20 @@ class GroupSettingsActivity : AppCompatActivity() {
 
         listView = findViewById<View>(R.id.membersListView) as ListView
         submitBtn = findViewById(R.id.submitGroupBtn)
-
+        btndeleteGroup = findViewById(R.id.deleteGrpBtn)
         dataModel = ArrayList<DataModel>()
 
+
+        btndeleteGroup.setOnClickListener {
+            db.collection("groups").document(idgroup)
+                .delete()
+                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+
+            val deletegroupIntent = Intent(this,MainActivity::class.java)
+            startActivity(deletegroupIntent)
+            finish()
+        }
         db.collection("groups").document(idgroup)
             .get()
             .addOnSuccessListener {
