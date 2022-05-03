@@ -84,7 +84,8 @@ class GroupSettingsActivity : AppCompatActivity() {
                     memberschecked!!.add(dataModel!![i].name.toString())
                 }
             }
-            Toast.makeText(this, memberschecked[0], Toast.LENGTH_SHORT).show()
+            db.collection("groups").document(idgroup).update("participantes",memberschecked )
+            finish()
         }
 
 

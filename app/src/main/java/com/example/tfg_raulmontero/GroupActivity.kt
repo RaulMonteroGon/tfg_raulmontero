@@ -1,7 +1,6 @@
 package com.example.tfg_raulmontero
 
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -32,7 +31,7 @@ class GroupActivity : AppCompatActivity() {
 
         groupTitleTextView = findViewById(R.id.groupTitleTextView)
         btnCreateTask = findViewById(R.id.createTaskButton)
-        btndeleteGroup = findViewById(R.id.deletegrpBtn)
+        btndeleteGroup = findViewById(R.id.settingsBtn)
 
         element = intent.getSerializableExtra("GroupElement") as ListElement
 

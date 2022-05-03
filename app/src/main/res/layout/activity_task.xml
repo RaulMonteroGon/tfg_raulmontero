@@ -78,15 +78,13 @@
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <Button
-        android:id="@+id/deleteTaskBtn"
+        android:id="@+id/submitTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginBottom="79dp"
-        android:text="Delete Task"
+        android:layout_marginStart="88dp"
+        android:layout_marginBottom="72dp"
+        android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
@@ -96,7 +94,17 @@
         android:layout_marginStart="31dp"
         android:layout_marginEnd="31dp"
         android:layout_marginBottom="119dp"
-        app:layout_constraintBottom_toTopOf="@+id/deleteTaskBtn"
+        app:layout_constraintBottom_toTopOf="@+id/submitTaskBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/editTaskBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="72dp"
+        android:text="Edit Task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

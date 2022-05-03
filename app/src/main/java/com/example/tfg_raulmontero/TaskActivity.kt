@@ -24,7 +24,8 @@ class TaskActivity : AppCompatActivity() {
     lateinit var doneBtn :MaterialButton
     lateinit var notdoneBtn:MaterialButton
 
-    lateinit var deleteTaskBtn :Button
+    lateinit var submitTaskBtn :Button
+    lateinit var editTaskBtn :Button
 
     lateinit var db : FirebaseFirestore
     private lateinit var auth: FirebaseAuth
@@ -47,7 +48,8 @@ class TaskActivity : AppCompatActivity() {
         inprocessBtn = findViewById(R.id.inprogressBtn)
         doneBtn = findViewById(R.id.doneBtn)
         notdoneBtn = findViewById(R.id.notdoneBtn)
-        deleteTaskBtn = findViewById(R.id.deleteTaskBtn)
+        submitTaskBtn = findViewById(R.id.submitTaskBtn)
+        editTaskBtn = findViewById(R.id.editTaskBtn)
 
         listView = findViewById<View>(R.id.taskmembersGroup) as ListView
 
@@ -69,22 +71,44 @@ class TaskActivity : AppCompatActivity() {
                 }
             }
         }
-        deleteTaskBtn.setOnClickListener{
-            db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
+        submitTaskBtn.setOnClickListener{
+            /*db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
                 .delete()
                 .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
                 .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
             val deletetaskIntent = Intent(this,GroupActivity::class.java)
             startActivity(deletetaskIntent)
+            finish()*/
+
+            var memberschecked = mutableListOf<String>()
+            //memberschecked!!.add(dataModel!![0].name.toString())
+
+            for (i in 0 until dataModel!!.size){
+                if (dataModel!![i].checked == true){
+                    memberschecked!!.add(dataModel!![i].name.toString())
+                }
+            }
+            db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("asignacion",memberschecked )
+
+            /*val submitTaskIntent = Intent(this,GroupActivity::class.java)
+            startActivity(submitTaskIntent)*/
             finish()
+
+        }
+
+        editTaskBtn.setOnClickListener {
+            val editTasIntent = Intent(this,EditTaskActivity::class.java)
+            editTasIntent.putExtra("TaskElement", task)
+            editTasIntent.putExtra("idgroup", idgroup)
+            startActivity(editTasIntent)
         }
 
         dataModel = ArrayList<DataModel>()
 
-        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
+        db.collection("groups").document(idgroup)
             .get()
             .addOnSuccessListener {
-                val memberslist = it["asignacion"] as List<String>
+                val memberslist = it["participantes"] as List<String>
                 for (members in memberslist.indices!!){
                     dataModel!!.add(DataModel(memberslist[members],false))
                 }
