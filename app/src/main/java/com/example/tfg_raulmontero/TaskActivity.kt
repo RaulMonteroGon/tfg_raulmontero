@@ -30,7 +30,7 @@ class TaskActivity : AppCompatActivity() {
     lateinit var db : FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     lateinit var idgroup :String
-
+    lateinit var estado :String
     lateinit var listView: ListView
 
     var dataModel :ArrayList<DataModel>? =null
@@ -42,6 +42,7 @@ class TaskActivity : AppCompatActivity() {
 
         db = Firebase.firestore
         auth = FirebaseAuth.getInstance()
+
 
         toggleGroup = findViewById(R.id.toggleButtonGroup)
         taskTitleTextView = findViewById(R.id.taskTitleTextView)
@@ -55,7 +56,7 @@ class TaskActivity : AppCompatActivity() {
 
         task = intent.getSerializableExtra("TaskElement") as ListElement
         idgroup = intent.getSerializableExtra("idgroup") as String
-        Toast.makeText(this, task.name, Toast.LENGTH_SHORT).show()
+
         setupcheck()
         taskTitleTextView.text = task.getName()
         toggleGroup.addOnButtonCheckedListener { toggleGroup, checkedId, isChecked ->
@@ -89,7 +90,7 @@ class TaskActivity : AppCompatActivity() {
                 }
             }
             db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("asignacion",memberschecked )
-
+            db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("estado",estado)
             /*val submitTaskIntent = Intent(this,GroupActivity::class.java)
             startActivity(submitTaskIntent)*/
             finish()
@@ -139,16 +140,13 @@ class TaskActivity : AppCompatActivity() {
     }
 
     fun setdone(){
-        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("estado","Finalizado")
-        Toast.makeText(this, "Has marcado la tarea como finalizada", Toast.LENGTH_SHORT).show()
+        estado = "Finalizado"
     }
     fun setinprocess(){
-        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("estado","En proceso")
-        Toast.makeText(this, "Has marcado la tarea como en proceso", Toast.LENGTH_SHORT).show()
+        estado = "En proceso"
     }
     fun setnotdone(){
-        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("estado","Sin hacer")
-        Toast.makeText(this, "Has marcado la tarea como pendiente", Toast.LENGTH_SHORT).show()
+        estado = "Sin hacer"
     }
     fun setupcheck(){
         db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
