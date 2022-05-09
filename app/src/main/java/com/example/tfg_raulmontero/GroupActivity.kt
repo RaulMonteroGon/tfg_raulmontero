@@ -16,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 
 class GroupActivity : AppCompatActivity() {
     lateinit var groupTitleTextView : TextView
+    lateinit var groupDescriptionTextView : TextView
     lateinit var element :ListElement
     lateinit var taskrecyclerview : RecyclerView
     lateinit var btnCreateTask: Button
@@ -30,6 +31,7 @@ class GroupActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         groupTitleTextView = findViewById(R.id.groupTitleTextView)
+        groupDescriptionTextView = findViewById(R.id.groupDescriptionTextView)
         btnCreateTask = findViewById(R.id.createTaskButton)
         btnsettingsGroup = findViewById(R.id.settingsBtn)
 
@@ -41,6 +43,12 @@ class GroupActivity : AppCompatActivity() {
 
         groupTitleTextView.text = element.getName()
 
+        db.collection("groups").document(element.idgroup).get()
+            .addOnSuccessListener {
+                groupDescriptionTextView.text = it.get("descripcion") as String
+            }
+
+
         btnCreateTask.setOnClickListener{
             val createTaskIntent = Intent(this,CreateTaskActivity::class.java)
             createTaskIntent.putExtra("GroupElement", element)
@@ -50,10 +58,6 @@ class GroupActivity : AppCompatActivity() {
             val deletegroupIntent = Intent(this,GroupSettingsActivity::class.java)
             deletegroupIntent.putExtra("idgroup", element.getIdgroup())
             startActivity(deletegroupIntent)
-
-
-
-
         }
     }
 
