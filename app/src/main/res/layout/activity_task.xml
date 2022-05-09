@@ -7,6 +7,18 @@
     tools:context=".TaskActivity">
 
     <TextView
+        android:id="@+id/taskDescriptionTextView"
+        android:layout_width="347dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="36dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskTitleTextView" />
+
+    <TextView
         android:id="@+id/taskTitleTextView"
         android:layout_width="316dp"
         android:layout_height="55dp"
@@ -26,12 +38,12 @@
         android:id="@+id/stateTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="27dp"
         android:layout_weight="1"
         android:text="State of task:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskTitleTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/toggleButtonGroup"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButtonGroup"
@@ -39,9 +51,10 @@
         android:layout_height="82dp"
         android:layout_marginStart="29dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="460dp"
+        android:layout_marginBottom="340dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:singleSelection="true">
 
@@ -82,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="44dp"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -93,9 +106,10 @@
         android:layout_height="188dp"
         android:layout_marginStart="31dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginBottom="119dp"
+        android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toTopOf="@+id/submitTaskBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -103,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="44dp"
         android:text="Edit Task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

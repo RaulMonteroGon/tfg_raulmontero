@@ -17,6 +17,7 @@ import java.sql.Timestamp
 
 class TaskActivity : AppCompatActivity() {
     lateinit var taskTitleTextView : TextView
+    lateinit var taskDescriptionTextView : TextView
     lateinit var task :ListElement
     lateinit var toggleGroup: MaterialButtonToggleGroup
 
@@ -51,6 +52,7 @@ class TaskActivity : AppCompatActivity() {
         notdoneBtn = findViewById(R.id.notdoneBtn)
         submitTaskBtn = findViewById(R.id.submitTaskBtn)
         editTaskBtn = findViewById(R.id.editTaskBtn)
+        taskDescriptionTextView = findViewById(R.id.taskDescriptionTextView)
 
         listView = findViewById<View>(R.id.taskmembersGroup) as ListView
 
@@ -58,6 +60,10 @@ class TaskActivity : AppCompatActivity() {
         idgroup = intent.getSerializableExtra("idgroup") as String
 
         setupcheck()
+
+
+
+
         taskTitleTextView.text = task.getName()
         toggleGroup.addOnButtonCheckedListener { toggleGroup, checkedId, isChecked ->
             if(isChecked){
@@ -135,7 +141,11 @@ class TaskActivity : AppCompatActivity() {
                 dataModel!!.add(DataModel("no funciona",false))
             }
 
-
+        db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
+            .get()
+            .addOnSuccessListener {
+                taskDescriptionTextView.text = it.get("descripcion") as String
+            }
 
     }
 

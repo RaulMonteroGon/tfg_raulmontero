@@ -4,13 +4,11 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ListView
+import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.Button
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -27,6 +25,8 @@ class GroupSettingsActivity : AppCompatActivity() {
     lateinit var btndeleteGroup : Button
     lateinit var db : FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    lateinit var editDescriptionEditText : EditText
+    lateinit var invitationCodeTextView :TextView
 
     lateinit var idgroup :String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +42,17 @@ class GroupSettingsActivity : AppCompatActivity() {
         listView = findViewById<View>(R.id.membersListView) as ListView
         submitBtn = findViewById(R.id.submitGroupBtn)
         btndeleteGroup = findViewById(R.id.deleteGrpBtn)
+        editDescriptionEditText = findViewById(R.id.editDescriptionEditText)
         dataModel = ArrayList<DataModel>()
+        invitationCodeTextView = findViewById(R.id.invitationCodeTextView)
 
 
+        invitationCodeTextView.setText(idgroup)
+        db.collection("groups").document(idgroup).get()
+            .addOnSuccessListener {
+                editDescriptionEditText.setText(it.get("descripcion") as String)
+
+            }
         btndeleteGroup.setOnClickListener {
             db.collection("groups").document(idgroup)
                 .delete()
@@ -99,6 +107,10 @@ class GroupSettingsActivity : AppCompatActivity() {
                 }
             }
             db.collection("groups").document(idgroup).update("participantes",memberschecked )
+            db.collection("groups").document(idgroup).update("descripcion",editDescriptionEditText.text.toString() )
+
+            val mainActivityIntent = Intent(this,MainActivity::class.java)
+            startActivity(mainActivityIntent)
             finish()
         }
 
