@@ -39,23 +39,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginBottom="27dp"
+        android:layout_marginTop="29dp"
         android:layout_weight="1"
         android:text="State of task:"
-        app:layout_constraintBottom_toTopOf="@+id/toggleButtonGroup"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionTextView" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButtonGroup"
         android:layout_width="334dp"
         android:layout_height="82dp"
         android:layout_marginStart="29dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="340dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stateTV"
         app:singleSelection="true">
 
         <com.google.android.material.button.MaterialButton
@@ -95,30 +95,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginTop="35dp"
         android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskmembersGroup" />
 
     <ListView
         android:id="@+id/taskmembersGroup"
         android:layout_width="349dp"
         android:layout_height="188dp"
         android:layout_marginStart="31dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginBottom="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/submitTaskBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:listSelector="@android:color/transparent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGroup" />
 
     <Button
         android:id="@+id/editTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginBottom="44dp"
         android:text="Edit Task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskmembersGroup" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,6 +37,8 @@ class TaskActivity : AppCompatActivity() {
     var dataModel :ArrayList<DataModel>? =null
     lateinit var membersadapter: MembersAdapter
 
+    lateinit var memberslist : List<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
@@ -99,6 +101,11 @@ class TaskActivity : AppCompatActivity() {
             db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup).update("estado",estado)
             /*val submitTaskIntent = Intent(this,GroupActivity::class.java)
             startActivity(submitTaskIntent)*/
+
+            val gototaskIntent = Intent(this,TaskActivity::class.java)
+            gototaskIntent.putExtra("TaskElement", task)
+            gototaskIntent.putExtra("idgroup", idgroup)
+            startActivity(gototaskIntent)
             finish()
 
         }
@@ -115,25 +122,40 @@ class TaskActivity : AppCompatActivity() {
         db.collection("groups").document(idgroup)
             .get()
             .addOnSuccessListener {
-                val memberslist = it["participantes"] as List<String>
-                for (members in memberslist.indices!!){
-                    dataModel!!.add(DataModel(memberslist[members],false))
-                }
+                memberslist = it["participantes"] as List<String>
+                db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
+                    .get()
+                    .addOnSuccessListener {
+
+                        val asignacionList = it["asignacion"] as List<String>
+                        for (members in memberslist.indices!!){
+                            if (asignacionList.contains(memberslist[members])){
+                                dataModel!!.add(DataModel(memberslist[members],true))
+                            }else{
+                                dataModel!!.add(DataModel(memberslist[members],false))
+                            }
+
+                        }
 
 
 
 
-                listView.setItemsCanFocus(false);
-                membersadapter = MembersAdapter(dataModel!!, applicationContext)
-                listView.adapter = membersadapter
+                        listView.setItemsCanFocus(false);
+                        membersadapter = MembersAdapter(dataModel!!, applicationContext)
+                        listView.adapter = membersadapter
+
+                        /*
+                        listView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
+
+                            val dataModel1 : DataModel = dataModel!![position] as DataModel
+                            dataModel1.checked = !dataModel1.checked
+                            membersadapter.notifyDataSetChanged()
+                        })*/
+
+                    }
 
 
-                listView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
 
-                    val dataModel1 : DataModel = dataModel!![position] as DataModel
-                    dataModel1.checked = !dataModel1.checked
-                    membersadapter.notifyDataSetChanged()
-                })
 
 
 

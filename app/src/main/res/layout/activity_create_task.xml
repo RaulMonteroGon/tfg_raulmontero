@@ -8,6 +8,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
+    <ListView
+        android:id="@+id/newtaskmembersGroup"
+        android:layout_width="349dp"
+        android:layout_height="188dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="31dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/configuracionNuevaTareaEditText" />
+
     <TextView
         android:id="@+id/NewTaskTextView"
         android:layout_width="wrap_content"
@@ -53,19 +66,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameNewTaskEditText" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/asignacionNewTaskTextView"
-        android:layout_width="256dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="110dp"
-        android:hint="Asignación"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/configuracionNuevaTareaEditText" />
-
     <EditText
         android:id="@+id/configuracionNuevaTareaEditText"
         android:layout_width="236dp"
@@ -81,33 +81,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionNewTaskEditText" />
 
-    <EditText
-        android:id="@+id/editTextTime"
-        android:layout_width="256dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="44dp"
-        android:ems="10"
-        android:hint="Hora"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/hourSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/selectDayButton" />
-
     <Button
         android:id="@+id/submitNewTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="43dp"
         android:layout_marginEnd="168dp"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
+        app:layout_constraintTop_toBottomOf="@+id/hourTextView" />
 
     <Switch
         android:id="@+id/hourSwitch"
@@ -115,7 +100,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="57dp"
+        android:checked="true"
         android:minHeight="48dp"
+
         android:text="All day"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startingDayTextView" />
@@ -124,21 +111,31 @@
         android:id="@+id/startingDayTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="111dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="37dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/asignacionNewTaskTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/newtaskmembersGroup" />
 
     <Button
         android:id="@+id/selectDayButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="83dp"
-        android:layout_marginTop="98dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="21dp"
         android:text="SelectDay"
         app:layout_constraintStart_toEndOf="@+id/startingDayTextView"
-        app:layout_constraintTop_toBottomOf="@+id/asignacionNewTaskTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/newtaskmembersGroup" />
+
+    <TextView
+        android:id="@+id/hourTextView"
+        android:layout_width="145dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="46dp"
+        android:text="All day"
+        app:layout_constraintStart_toEndOf="@+id/hourSwitch"
+        app:layout_constraintTop_toBottomOf="@+id/selectDayButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

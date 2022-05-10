@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class EditTaskActivity : AppCompatActivity() {
     lateinit var deleteTaskBtn : Button
@@ -22,8 +24,10 @@ class EditTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_task)
 
+        db = Firebase.firestore
+        auth = FirebaseAuth.getInstance()
 
-        deleteTaskBtn = findViewById(R.id.deleteTaskBtn)
+        deleteTaskBtn = findViewById(R.id.editdeleteTaskBtn)
 
 
 
@@ -38,7 +42,7 @@ class EditTaskActivity : AppCompatActivity() {
                 .delete()
                 .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
                 .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
-            val deletetaskIntent = Intent(this,GroupActivity::class.java)
+            val deletetaskIntent = Intent(this,MainActivity::class.java)
             startActivity(deletetaskIntent)
             finish()
         }
