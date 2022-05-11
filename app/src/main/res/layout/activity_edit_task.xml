@@ -9,7 +9,117 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    <Button
+
+        <Button
+            android:id="@+id/submitEditTaskButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="159dp"
+            android:text="Submit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hourEditSwitch" />
+
+        <Switch
+            android:id="@+id/hourEditSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="16dp"
+
+            android:checked="false"
+            android:minHeight="48dp"
+            android:text="All day"
+            app:layout_constraintStart_toEndOf="@+id/hourEditTextView"
+            app:layout_constraintTop_toBottomOf="@+id/selectDayEditButton"
+            tools:checked="false" />
+
+        <TextView
+            android:id="@+id/hourEditTextView"
+            android:layout_width="145dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="37dp"
+            android:text="All day"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startingDayEditTextView" />
+
+        <Button
+            android:id="@+id/selectDayEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="109dp"
+            android:layout_marginTop="28dp"
+            android:text="SelectDay"
+            app:layout_constraintStart_toEndOf="@+id/startingDayEditTextView"
+            app:layout_constraintTop_toBottomOf="@+id/edittaskmembersGroup" />
+
+        <TextView
+            android:id="@+id/startingDayEditTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="37dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edittaskmembersGroup" />
+
+        <ListView
+            android:id="@+id/edittaskmembersGroup"
+            android:layout_width="349dp"
+            android:layout_height="188dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/configuracionEditTareaEditText2" />
+
+        <EditText
+            android:id="@+id/configuracionEditTareaEditText2"
+            android:layout_width="236dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="145dp"
+            android:ems="10"
+            android:hint="Configuracion"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionEditTaskEditText" />
+
+        <EditText
+            android:id="@+id/descriptionEditTaskEditText"
+            android:layout_width="235dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="146dp"
+            android:ems="10"
+            android:hint="Descripcion"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameEditTaskEditText" />
+
+        <EditText
+            android:id="@+id/nameEditTaskEditText"
+            android:layout_width="239dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="142dp"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskSettingsTitleTextView" />
+
+        <Button
         android:id="@+id/editdeleteTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -115,6 +115,7 @@ class TaskActivity : AppCompatActivity() {
             editTasIntent.putExtra("TaskElement", task)
             editTasIntent.putExtra("idgroup", idgroup)
             startActivity(editTasIntent)
+            finish()
         }
 
         dataModel = ArrayList<DataModel>()
