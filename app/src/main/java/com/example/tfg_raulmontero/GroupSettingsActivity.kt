@@ -27,6 +27,7 @@ class GroupSettingsActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     lateinit var editDescriptionEditText : EditText
     lateinit var invitationCodeTextView :TextView
+    lateinit var groupNameSettingsEditText :EditText
 
     lateinit var idgroup :String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,13 +46,13 @@ class GroupSettingsActivity : AppCompatActivity() {
         editDescriptionEditText = findViewById(R.id.editDescriptionEditText)
         dataModel = ArrayList<DataModel>()
         invitationCodeTextView = findViewById(R.id.invitationCodeTextView)
-
+        groupNameSettingsEditText = findViewById(R.id.groupNameSettingsEditText)
 
         invitationCodeTextView.setText(idgroup)
         db.collection("groups").document(idgroup).get()
             .addOnSuccessListener {
                 editDescriptionEditText.setText(it.get("descripcion") as String)
-
+                groupNameSettingsEditText.setText(it.get("nombre") as String)
             }
         btndeleteGroup.setOnClickListener {
             db.collection("groups").document(idgroup)
@@ -68,7 +69,7 @@ class GroupSettingsActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 val memberslist = it["participantes"] as List<String>
                 for (members in memberslist.indices!!){
-                    dataModel!!.add(DataModel(memberslist[members],false))
+                    dataModel!!.add(DataModel(memberslist[members],true))
                 }
 
 
@@ -108,6 +109,7 @@ class GroupSettingsActivity : AppCompatActivity() {
             }
             db.collection("groups").document(idgroup).update("participantes",memberschecked )
             db.collection("groups").document(idgroup).update("descripcion",editDescriptionEditText.text.toString() )
+            db.collection("groups").document(idgroup).update("nombre",groupNameSettingsEditText.text.toString() )
 
             val mainActivityIntent = Intent(this,MainActivity::class.java)
             startActivity(mainActivityIntent)

@@ -58,6 +58,7 @@ class GroupActivity : AppCompatActivity() {
             val deletegroupIntent = Intent(this,GroupSettingsActivity::class.java)
             deletegroupIntent.putExtra("idgroup", element.getIdgroup())
             startActivity(deletegroupIntent)
+            finish()
         }
     }
 

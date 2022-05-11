@@ -18,6 +18,9 @@ import java.sql.Timestamp
 class TaskActivity : AppCompatActivity() {
     lateinit var taskTitleTextView : TextView
     lateinit var taskDescriptionTextView : TextView
+
+    lateinit var hourTaskTextView : TextView
+    lateinit var dateTaskTextView : TextView
     lateinit var task :ListElement
     lateinit var toggleGroup: MaterialButtonToggleGroup
 
@@ -55,6 +58,8 @@ class TaskActivity : AppCompatActivity() {
         submitTaskBtn = findViewById(R.id.submitTaskBtn)
         editTaskBtn = findViewById(R.id.editTaskBtn)
         taskDescriptionTextView = findViewById(R.id.taskDescriptionTextView)
+        dateTaskTextView = findViewById(R.id.dateTaskTextView)
+        hourTaskTextView = findViewById(R.id.hourTaskTextView)
 
         listView = findViewById<View>(R.id.taskmembersGroup) as ListView
 
@@ -81,13 +86,7 @@ class TaskActivity : AppCompatActivity() {
             }
         }
         submitTaskBtn.setOnClickListener{
-            /*db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
-                .delete()
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
-                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
-            val deletetaskIntent = Intent(this,GroupActivity::class.java)
-            startActivity(deletetaskIntent)
-            finish()*/
+
 
             var memberschecked = mutableListOf<String>()
             //memberschecked!!.add(dataModel!![0].name.toString())
@@ -168,6 +167,8 @@ class TaskActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener {
                 taskDescriptionTextView.text = it.get("descripcion") as String
+                dateTaskTextView.text = it.get("dia") as String
+                hourTaskTextView.text = it.get("hora") as String
             }
 
     }
