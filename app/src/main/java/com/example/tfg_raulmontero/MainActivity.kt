@@ -96,33 +96,29 @@ class MainActivity : AppCompatActivity() {
     fun joingroup (iddoc : String){
         val document = db.collection("groups").document(iddoc)
         document.update("participantes",FieldValue.arrayUnion(auth.currentUser?.email.toString()))
+        val gotomainintent = Intent(this,MainActivity::class.java)
+        startActivity(gotomainintent)
+        finish()
     }
     fun creategroup (name: String){
         class grupo(
             val nombre: String = name,
-            val compra: List<String>? = null,
+            val descripcion: String= "",
             val participantes: List<String> = listOf(auth.currentUser?.email.toString())
         )
-        val data = grupo()
 
+        val data = grupo()
         db.collection("groups")
             .add(data)
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
-
-                class economia()/*
-                class tareas (
-                    val asignacion : List<String>? = null,
-                    val configuracion: String? = null,
-                        )
-                val data = tareas()
-                db.collection("groups").document(documentReference.id).collection("tareas")
-                    .add(data)*/
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
             }
-
+        val gotomainintent = Intent(this,MainActivity::class.java)
+        startActivity(gotomainintent)
+        finish()
     }
 
 
@@ -136,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    elementslst.add(ListElement("#775447", document.get("nombre") as String?,document.get("nombre") as String?,"1",document.id))
+                    elementslst.add(ListElement("#775447", document.get("nombre") as String?,"","1",document.id))
 
                     //Toast.makeText(this, "Prueba", Toast.LENGTH_LONG).show()
                         Log.d(TAG, "${document.id} => ${document.data}")
@@ -184,16 +180,16 @@ class MainActivity : AppCompatActivity() {
 
                     //elementslst.add(ListElement("#775447", "Grupo3", "Resi Oslo", "1", "123"))
 
-
                     elementslst.add(
                         ListElement(
-                            "#775447",
+                            "#775446",
                             document.get("nombre") as String?,
+                            "",//document.reference.parent.parent?.id,
                             document.reference.parent.parent?.id,
-                            "1",
                             document.id
                         )
                     )
+
                 }
                 class Listener : ListAdapter.OnItemClickListener{
                     override fun onItemClick(item: ListElement?) {
@@ -222,7 +218,7 @@ class MainActivity : AppCompatActivity() {
     fun moveToDescription (item: ListElement){
         val gototaskIntent = Intent(this,TaskActivity::class.java)
         gototaskIntent.putExtra("TaskElement", item)
-        gototaskIntent.putExtra("idgroup", item.description)
+        gototaskIntent.putExtra("idgroup", item.number)
         startActivity(gototaskIntent)
 
 

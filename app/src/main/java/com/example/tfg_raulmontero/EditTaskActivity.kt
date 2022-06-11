@@ -198,6 +198,7 @@ class EditTaskActivity : AppCompatActivity() {
                            diatarea: String,
                            horatarea:String?
     ){
+        task.name = nombretarea
         db.collection("groups").document(idgroup).collection("tareas").document(task.idgroup)
             .get()
             .addOnSuccessListener {

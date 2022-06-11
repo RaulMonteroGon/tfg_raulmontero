@@ -72,13 +72,9 @@ class GroupSettingsActivity : AppCompatActivity() {
                     dataModel!!.add(DataModel(memberslist[members],true))
                 }
 
-
-
-
                 listView.setItemsCanFocus(false);
                 membersadapter = MembersAdapter(dataModel!!, applicationContext)
                 listView.adapter = membersadapter
-
 
                 listView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
 

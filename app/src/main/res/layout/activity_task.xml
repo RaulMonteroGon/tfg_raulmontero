@@ -12,9 +12,7 @@
         android:layout_height="58dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="41dp"
-        android:layout_marginEnd="36dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTaskTextView" />
 
@@ -51,9 +49,6 @@
         android:layout_height="82dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stateTV"
         app:singleSelection="true">
@@ -102,15 +97,15 @@
 
     <ListView
         android:id="@+id/taskmembersGroup"
-        android:layout_width="349dp"
-        android:layout_height="188dp"
+        android:layout_width="348dp"
+        android:layout_height="142dp"
         android:layout_marginStart="31dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="31dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:listSelector="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggleButtonGroup" />
@@ -119,10 +114,10 @@
         android:id="@+id/editTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="57dp"
         android:layout_marginTop="35dp"
-        android:layout_marginEnd="64dp"
         android:text="Edit Task"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/submitTaskBtn"
         app:layout_constraintTop_toBottomOf="@+id/taskmembersGroup" />
 
     <TextView
@@ -139,9 +134,9 @@
         android:id="@+id/hourTaskTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="177dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dateTaskTextView"
         app:layout_constraintTop_toBottomOf="@+id/taskTitleTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

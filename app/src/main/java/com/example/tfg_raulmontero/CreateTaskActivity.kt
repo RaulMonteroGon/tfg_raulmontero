@@ -85,7 +85,7 @@ class CreateTaskActivity : AppCompatActivity() {
                 dateTask.text.toString(),
                 hourTextView.text.toString()
                 )
-            val createTaskIntent = Intent(this,CreateTaskActivity::class.java)
+            val createTaskIntent = Intent(this,GroupActivity::class.java)
             createTaskIntent.putExtra("GroupElement", group)
             startActivity(createTaskIntent)
             finish()
